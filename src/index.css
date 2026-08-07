@@ -1,46 +1,59 @@
 @import "tailwindcss";
 
-@theme {
-  --color-mint-500: oklch(0.72 0.11 178);
-  --color-light-main: #edf2f7;
+.color-reference{
+    color-light-main: #edf2f7;
+    color-vul-primary: #1a365d;
+    color-vul-secondary: #2b6cb0;
+    color-vul-accent: #3182ce; 
 }
 
+@theme {
+    /* COLORS */
+    --color-light-main: #edf2f7;
 
-/* FOMPONENTES POR TRANSFORMAR */
-:root {
+        /* VULNERABILIDAD */
+    --color-vul-primary: #1a365d;
+    --color-vul-secondary: #2b6cb0;
 
-    /* VULNERABILIDAD */
-     /* --primary-color: #1a365d;
-    --secondary-color: #2b6cb0;
-    --border-color: #cbd5e0;
-    --bg-light: #f7fafc;
-    --text-dark: #2d3748;
-    --accent-color: #3182ce;
-} */
+    --color-vul-accent: #3182ce; 
+    /* 
+    --color-vul-border: #cbd5e0;
+    --color-vul-bg-light: #f7fafc;
+    --color-vul-text-dark: #2d3748;
+    */
 
-    /* SIHOH FORM */
-    --primary-blue: #0f2c59;
-    --secondary-blue: #1d70b8;
+        /* SIHOH FORM */
+    --color-siroh-primary-blue: #0f2c59;
+    --color-siroh-secondary-blue: #1d70b8;
 
-    --primary-orange: #e65c00;
-    --secondary-orange: #ff8800;
+    /* --color-siroh-primary-orange: #e65c00; */
+    /* --color-siroh-secondary-orange: #ff8800; */
 
-    --light-blue: #f0f7ff;
-    --light-orange:#fff8f0;
+    --color-siroh-light-blue: #f0f7ff;
+    /* --color-siroh-light-orange:#fff8f0; */
 
-    --alert-red: #d9381e;
-    --warning-orange: #f59e0b;
-    --success-green: #10b981;
+    --color-siroh-alert-red: #d9381e;
+    /* --color-siroh-warning-orange: #f59e0b; */
+    /* --color-siroh-success-green: #10b981; */
 
-    --bg-slate: #f8fafc;
+    /* --color-siroh-bg-slate: #f8fafc; */
 
-    --text-main: #1e293b;
+    /* --color-siroh-text-main: #1e293b; */
 
-    --border-muted: #cbd5e1;
+    /* --color-siroh-border-muted: #cbd5e1; */
 
-    --sidebar-width: 290px;
+    --color-tabs: #4a5568;
+    --color-tabs-border: #cbd5e0;
+
+    /* FONTS */
+    --font-segoe: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     
-    scroll-behavior: smooth;
+    /* FORM ITEMS */
+    --color-checkboxItem: #334155;
+}
+
+@layer components {
+
 }
 
 /* HEADER */
@@ -146,7 +159,10 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* FORMULARIOS EXPANDIDOS */
+
+
+
+/* SIROH FORMS*/
 #form-siroh{
     display: flex;
     overflow-x: scroll;

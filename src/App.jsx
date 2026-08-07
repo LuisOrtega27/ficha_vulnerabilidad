@@ -1,15 +1,22 @@
+
+import { BrowserRouter } from "react-router"
+import { FormHeader } from "./components/FormHeader"
+import { FormVulne } from "./components/FormVulne"
+
 function App() {
 
   return (
-    <div className="bg-light-main min-h-lvh min-w-lvw flex items-center justify-center">
+    <div className="form-background bg-light-main min-h-lvh min-w-lvw pt-5">
       
-      <div className="bg-white w-8/12 p-4 rounded-2xl shadow-md">
+      <div className="form-container bg-white w-8/12 p-4 rounded-2xl shadow-md">
 
-        <h1 className="text-4xl text-green-500">Hello world</h1>
+        <FormHeader />
+
+        <BrowserRouter>
+          <FormVulne />
+        </BrowserRouter>
 
       </div>
-
-
       
     </div>
   )
