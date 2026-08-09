@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Vulnerabilidad Física - IMGRAD</title>
+    
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <script src="./js/formTabs.js" defer></script>
+    <script src="./js/formDatalistFilters.js" defer></script>
+</head>
+<body>
+
+<div class="form-container">
+    
+    <!-- ENCABEZADO -->
+    <header class="header">
+        <div class="header-title">
+            <h1>Alcaldía de Caracas</h1>
+            <h2>Instituto Municipal de Gestión de Riesgos y Administración de Desastres</h2>
+            <h3>REGISTRO DE VULNERABILIDAD FÍSICA (IMGRAD)</h3>
+        </div>
+        <div class="meta-info">
+            <div><strong>Nº CONTROL:</strong> <span style="color: #e53e3e; font-weight: bold;">90</span></div>
+            <div><strong>Fecha:</strong> 16/4/2024</div>
+            <div><strong>Fecha Levantamiento:</strong> 24/9/2023</div>
+        </div>
+    </header>
+
+    <!-- NAVEGACIÓN POR PESTAÑAS -->
+    <div class="tabs-nav">
+        <button class="tab-button active" onclick="openTab(event, 'tab1')">1. Ubicación y Ocupante</button>
+        <button class="tab-button" onclick="openTab(event, 'tab2')">2. Vivienda y Censo</button>
+        <button class="tab-button" onclick="event.preventDefault(); openTab(event, 'tab3')">3. Terreno y Parcela</button>
+        <button class="tab-button" onclick="openTab(event, 'tab4')">4. Elementos Estructurales</button>
+        <button class="tab-button" onclick="openTab(event, 'tab5')">5. Patologías y Diagnóstico</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); alert('Formulario guardado exitosamente (Simulación)');">
+        
+        <!-- PESTAÑA 1: UBICACIÓN Y OCUPANTE -->
+        <div id="tab1" class="tab-content active">
+            <div class="section-title">Datos Geográficos, Sociales y del Ocupante</div>
+            
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Nombre Organización Social</label>
+                    <input type="text" placeholder="C.C. UNIDOS POR MONTE SINAI" id="input_organizacion" list="list_organizacion" disabled required>
+                    <datalist id="list_organizacion"></datalist>
+                </div>
+                <div class="form-group">
+                    <label>Código Catastral</label>
+                    <input type="text" placeholder="00-000-000-U01-000-000-000-000-00-00" id="input_cod_catastral" disabled>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Parroquia</label>
+                    <input type="text" placeholder="Escriba la parroquia" id="input_parroquia" list="list_parroquia" required>
+                    <datalist id="list_parroquia"></datalist>
+                </div>
+                <div class="form-group">
+                    <label>Sector</label>
+                    <input type="text" placeholder="Sector A" id="input_sector" list="list_sector" disabled required>
+                    <datalist id="list_sector"></datalist>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Apellidos y Nombres del Ocupante</label>
+                    <input type="text" value="JOHANNA GERRERO">
+                </div>
+                <div class="form-group">
+                    <label>Cédula de Identidad</label>
+                    <input type="text" placeholder="V-00000000">
+                </div>
+            </div>
+            <div class="grid-3" style="margin-top: 10px;">
+                <div class="form-group">
+                    <label>Teléfono Celular</label>
+                    <input type="text" placeholder="04XX-XXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono Local</label>
+                    <input type="text" placeholder="0212-XXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Condición del Ocupante</label>
+                    <div class="radio-group">
+                        <label class="radio-item"><input type="radio" name="condicion" checked> Propietario</label>
+                        <label class="radio-item"><input type="radio" name="condicion"> Inquilino / Ausente</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <td></td>
+                <button type="button" class="btn btn-primary" onclick="changeTab('tab2')">Siguiente &raquo;</button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 2: VIVIENDA Y CENSO -->
+        <div id="tab2" class="tab-content">
+            <div class="section-title">Características de la Vivienda y Datos Poblacionales</div>
+            
+            <div class="grid-4">
+                <div class="form-group">
+                    <label>Tipo de Vivienda</label>
+                    <div class="radio-group" style="grid-template-columns: 1fr; gap: 5px;">
+                        <label class="radio-item"><input type="radio" name="tipo_vivienda" checked> Unifamiliar</label>
+                        <label class="radio-item"><input type="radio" name="tipo_vivienda"> Multifamiliar</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>N° de Pisos</label>
+                    <input type="number" min="1" placeholder="-">
+                </div>
+                <div class="form-group">
+                    <label>N° de Entradas Indep.</label>
+                    <input type="number" min="1" placeholder="-">
+                </div>
+                <div class="form-group">
+                    <label>N° de Familias</label>
+                    <input type="number" min="1" placeholder="-">
+                </div>
+            </div>
+            
+            <h4 style="font-size: 13px; margin: 25px 0 10px 0; color: var(--secondary-color); text-transform: uppercase;">Desglose Demográfico (N° Personas en la Vivienda: 3)</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                <div class="form-group">
+                    <label>Lactantes</label>
+                    <input type="number" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Niños</label>
+                    <input type="number" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Adultos</label>
+                    <input type="number" min="0" value="3">
+                </div>
+                <div class="form-group">
+                    <label>Adultos Mayores</label>
+                    <input type="number" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Discapacitados</label>
+                    <input type="number" min="0" value="0">
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn btn-secondary" onclick="changeTab('tab1')">&laquo; Anterior</button>
+                <button type="button" class="btn btn-primary" onclick="changeTab('tab3')">Siguiente &raquo;</button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 3: TERRENO Y PARCELA -->
+        <div id="tab3" class="tab-content">
+            <div class="section-title">Situación de la Parcela y Amenazas Ambientales</div>
+            
+            <div class="form-group">
+                <label>Emplazamiento de la Parcela en el Terreno:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox"> Al Borde del Talud</label>
+                    <label class="checkbox-item"><input type="checkbox"> Sobre el Talud</label>
+                    <label class="checkbox-item"><input type="checkbox"> Al Pie del Talud</label>
+                </div>
+            </div>
+            
+            <h4 style="font-size: 13px; margin: 25px 0 10px 0; color: #e53e3e; text-transform: uppercase;">Factores de Riesgo e Inestabilidad del Entorno:</h4>
+            <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox"> Deslizamientos o Derrumbes Recientes</label>
+                <label class="checkbox-item"><input type="checkbox"> Árboles y/o Postes Inclinados</label>
+                <label class="checkbox-item"><input type="checkbox"> Grietas y Hundimientos en Calles/Escaleras</label>
+                <label class="checkbox-item"><input type="checkbox"> Grietas y Hundimientos en el Terreno</label>
+                <label class="checkbox-item"><input type="checkbox"> Botes de Agua (Blanca y/o Servida)</label>
+                <label class="checkbox-item"><input type="checkbox"> Terreno Húmedo (Sobresaturado)</label>
+                <label class="checkbox-item"><input type="checkbox"> Socavación (Por Acción Humana)</label>
+                <label class="checkbox-item"><input type="checkbox"> Procesos Erosivos Activos</label>
+                <label class="checkbox-item"><input type="checkbox"> Cauces o Quebradas Adyacentes</label>
+                <label class="checkbox-item"><input type="checkbox"> Botaderos de Basura en las Cercanías</label>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn btn-secondary" onclick="changeTab('tab2')">&laquo; Anterior</button>
+                <button type="button" class="btn btn-primary" onclick="changeTab('tab4')">Siguiente &raquo;</button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 4: ELEMENTOS ESTRUCTURALES -->
+        <div id="tab4" class="tab-content">
+            <div class="section-title">Tipología de Materiales y Sistema Constructivo</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Componente</th>
+                        <th>Materiales de Construcción Existentes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Paredes</strong></td>
+                        <td>
+                            <div class="checkbox-group" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                                <label><input type="checkbox"> Bloques Cemento / Arcilla</label>
+                                <label><input type="checkbox"> Bahareque / Adobe</label>
+                                <label><input type="checkbox"> Madera</label>
+                                <label><input type="checkbox"> Cartón / Otros</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Techo / Entre Piso</strong></td>
+                        <td>
+                            <div class="checkbox-group" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                                <label><input type="checkbox"> Zinc y/o Acerolit</label>
+                                <label><input type="checkbox"> Tabelones</label>
+                                <label><input type="checkbox"> Losa Acero</label>
+                                <label><input type="checkbox"> Madera</label>
+                                <label><input type="checkbox"> Paja / Bambú</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>"><strong>Columnas</strong></td>
+                        <td>
+                            <div class="checkbox-group" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                                <label><input type="checkbox"> Concreto Armado</label>
+                                <label><input type="checkbox"> Acero</label>
+                                <label><input type="checkbox"> Madera</label>
+                                <label><input type="checkbox"> Prefabricado</label>
+                                <label><input type="checkbox"> Ninguno</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vigas</strong></td>
+                        <td>
+                            <div class="checkbox-group" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                                <label><input type="checkbox"> Concreto Armado</label>
+                                <label><input type="checkbox"> Acero</label>
+                                <label><input type="checkbox"> Madera</label>
+                                <label><input type="checkbox"> Prefabricado</label>
+                                <label><input type="checkbox"> Ninguno</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pisos / Acabados</strong></td>
+                        <td>
+                            <input type="text" placeholder="Especificar tipología o estado físico de los pisos..." style="width: 98%; padding: 8px; border: 1px solid var(--border-color); border-radius:4px;">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn btn-secondary" onclick="changeTab('tab3')">&laquo; Anterior</button>
+                <button type="button" class="btn btn-primary" onclick="changeTab('tab5')">Siguiente &raquo;</button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA 5: PATOLOGÍAS Y DIAGNÓSTICO -->
+        <div id="tab5" class="tab-content">
+            <div class="section-title">Daños Estructurales, Equipamiento y Evaluación Final</div>
+            
+            <div class="form-group">
+                <label>Patologías y Daños Visibles en la Edificación:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox"> Grietas Diagonales en Paredes</label>
+                    <label class="checkbox-item"><input type="checkbox"> Grietas Horizontales en Paredes</label>
+                    <label class="checkbox-item"><input type="checkbox"> Presencia de Humedad Activa</label>
+                    <label class="checkbox-item"><input type="checkbox"> Filtraciones en Losas/Techos</label>
+                    <label class="checkbox-item"><input type="checkbox"> Presenta Hundimientos en Pisos</label>
+                    <label class="checkbox-item"><input type="checkbox"> Presenta Grietas en Pisos</label>
+                    <label class="checkbox-item"><input type="checkbox"> Puertas/Ventanas Trabadas (Descuadre)</label>
+                    <label class="checkbox-item"><input type="checkbox"> Desniveles Piso-Terreno / Columnas Expuestas</label>
+                    <label class="checkbox-item"><input type="checkbox"> Fundaciones Visibles (Erosión)</label>
+                    <label class="checkbox-item"><input type="checkbox"> Techo con Vigas en Ambos Sentidos</label>
+                    <label class="checkbox-item"><input type="checkbox"> Vigas con Daño / Elementos Arqueados</label>
+                    <label class="checkbox-item"><input type="checkbox"> Columnas con Espesor Adecuado (25x25cm)</label>
+                    <label class="checkbox-item"><input type="checkbox"> Continuidad de Columnas en todos los Niveles</label>
+                    <label class="checkbox-item"><input type="checkbox"> Columnas con Daños / Agrietamientos</label>
+                    <label class="checkbox-item"><input type="checkbox"> Efecto de Columna Corta</label>
+                </div>
+            </div>
+
+            <h4 style="font-size: 13px; margin: 25px 0 10px 0; color: var(--secondary-color); text-transform: uppercase;">Equipamientos e Hidro-Servicios:</h4>
+            <div class="grid-3" style="background: #fff; padding: 15px; border-radius: 4px; border: 1px solid var(--border-color); margin-bottom: 20px;">
+                <div class="form-group">
+                    <label>Tanque de Agua</label>
+                    <div style="display: flex; gap: 10px;">
+                        <label><input type="checkbox"> Subterráneo</label>
+                        <label><input type="checkbox"> Elevado</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Red Sanitaria</label>
+                    <label><input type="checkbox"> Aguas Empotradas</label>
+                </div>
+                <div class="form-group">
+                    <label>Excreta</label>
+                    <label><input type="checkbox"> Pozo Séptico</label>
+                </div>
+            </div>
+
+            <h4 style="font-size: 13px; margin: 20px 0 10px 0; color: #742a2a; text-transform: uppercase;">Dictamen de Vulnerabilidad Física:</h4>
+            <div class="vulnerability-rating">
+                <label class="radio-item" style="color: #38a169; font-weight: bold;"><input type="radio" name="vulnerabilidad"> BAJA</label>
+                <label class="radio-item" style="color: #dd6b20; font-weight: bold;"><input type="radio" name="vulnerabilidad"> MEDIA</label>
+                <label class="radio-item" style="color: #e53e3e; font-weight: bold;"><input type="radio" name="vulnerabilidad"> ALTA</label>
+                <label class="radio-item" style="color: #742a2a; font-weight: bold;"><input type="radio" name="vulnerabilidad"> MUY ALTA</label>
+                <label class="checkbox-item" style="background-color: #feebc8; border-color: #fbd38d;"><input type="checkbox"> Prioridad de Refugio</label>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label>Observaciones Generales del Evaluador</label>
+                <textarea placeholder="Inserte aquí el análisis cualitativo o sugerencias preventivas..."></textarea>
+            </div>
+
+            <div class="grid-2" style="margin-top: 20px; align-items: flex-end;">
+                <div class="form-group">
+                    <label>Nombre y Apellido del Empadronador / Evaluador</label>
+                    <input type="text" placeholder="Nombre completo">
+                </div>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn btn-submit" style="padding: 12px 35px;">Finalizar y Guardar Registro</button>
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button type="button" class="btn btn-secondary" onclick="changeTab('tab4')">&laquo; Anterior</button>
+                <td></td>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+</body>
+</html>
