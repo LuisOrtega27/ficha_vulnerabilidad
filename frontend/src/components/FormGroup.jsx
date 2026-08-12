@@ -1,4 +1,4 @@
-export const FormGroup = ({inputType = "text", inputName, inputPlaceholder, label }) => {
+export const FormGroup = ({inputType="text", inputName, inputPlaceholder, label, isDisabled=false, isRequired=false, isReadOnly=false }) => {
   return (
     <div className="flex flex-col">
 
@@ -23,12 +23,21 @@ export const FormGroup = ({inputType = "text", inputName, inputPlaceholder, labe
 
             :
 
-            <input className="
-                py-2 px-3 
-                border-2 rounded-xs border-siroh-border-muted 
-                text-xs
-                bg-white
-            " type={inputType} name={inputName} id={inputName} placeholder={inputPlaceholder}/>
+            <input 
+                className="
+                    py-2 px-3 
+                    border-2 rounded-xs border-siroh-border-muted 
+                    text-xs
+                    bg-white
+                " 
+                type={inputType} 
+                name={inputName} 
+                id={inputName} 
+                placeholder={inputPlaceholder} 
+                disabled={isDisabled} 
+                readOnly={isReadOnly} 
+                required={isRequired}
+            />
 
         }
 

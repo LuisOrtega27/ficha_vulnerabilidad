@@ -1,24 +1,23 @@
 
-import { BrowserRouter } from "react-router"
-import { FormHeader } from "./components/FormHeader"
-import { FormVulne } from "./components/FormVulne"
+import { BrowserRouter, Routes, Route } from "react-router"
+import { FormVulne } from "./pages/FormVulne"
+import { FormSocio } from "./pages/FormSocio"
 
 function App() {
 
   return (
-    <div className="form-background bg-light-main min-h-lvh min-w-vw pt-5">
+
+    
+    <BrowserRouter>
+
+      <Routes>
+        <Route path="/vulnerabilidad" element={<FormVulne />} />
+        <Route path="/socioeconomico" element={<FormSocio />} />
+      </Routes>
       
-      <div className="form-container bg-white w-8/12 p-4 rounded-2xl shadow-md">
+    </BrowserRouter>
 
-        <FormHeader />
-
-        <BrowserRouter>
-          <FormVulne />
-        </BrowserRouter>
-
-      </div>
       
-    </div>
   )
 }
 
