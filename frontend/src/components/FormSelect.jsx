@@ -1,4 +1,4 @@
-export const FormSelect = ({inputName, inputPlaceholder, label, optionList, actionHandler, parroquiaID=0 }) => {
+export const FormSelect = ({inputName, inputPlaceholder, label, optionList, actionHandler, filter=0 }) => {
 
     return (
     <div className="flex flex-col">
@@ -20,10 +20,10 @@ export const FormSelect = ({inputName, inputPlaceholder, label, optionList, acti
 
             <option>--{label}--</option>
 
-            { parroquiaID > 0 ?
+            { filter > 0 ?
 
                 optionList
-                .filter(item=>item.parroquia_id===parroquiaID)
+                .filter( item=> (item.parroquia_id || item.sector_id) === filter )
                 .map(item=> <option key={`${item.id}-${item.nom}`} value={`${item.id},${item.cod}`}>{item.nombre}</option>)
                 
                 : 

@@ -42,34 +42,58 @@ const tabList = [
 
 export const FormVulne = () => {
     
-    const [codCatastro, setCodCatastro] = useState(["01","001","000","U01","000","000","000","000","00","00"])
+    /*  como funciona el codigo catastral?
+        
+        1. El codigo catastral debe ser de 36 caracteres en total (contando los guiones)
+            01-001-012-U01-001-003-000-000-00-00
+            
+        2. El usuario puede escribir en el input del codigo catastral a partir del caracter 23 (despues del guion de la manzana)
+        
+        3. Se debe respetar el formato del codigo catastral. (maximo de caracterees y guiones)
+
+    */ 
+    const [codCatastro, setCodCatastro] = useState(["01","001","000","U01","000","000"]) 
+
+    // las listas se actualizan conectando con la base de datos
     const [listParroquias, setListParroquias] = useState([])
     const [listSectores, setListSectores] = useState([])
+    const [listManzanas, setListManzanas] = useState([])
     const [listOrganizaciones, setListOrganizaciones] = useState([])
 
-    const [filter, setFilter] = useState(0)
+    // los filtros usan el id para filtrar usando la llave foranea
+    const [parroquiaFilter, setParroquiaFilter] = useState(0)
+    const [sectorFilter, setSectorFilter] = useState(0)
 
+    // se controla el valor de los campos para activar el input de codigo catastral
+    const [parroquia, setParroquia] = useState(null)
+    const [sector, setSector] = useState(null)
+    const [manzana, setManzana] = useState(null)
+     
+    // CONECCION CON LA BASE DE DATOS
+
+    // buscar parroquias
     useEffect(()=>{
         
         const fetchParroquias = async ()=>{
 
             let result = await axios.get(`${apiURL}/api/vulnerabilidad/parroquias`)
+            console.log("Parroquias:")
             console.log(result.data)
             setListParroquias(result.data)
 
         }
         fetchParroquias()
 
-
-
     }, [])
-    
-    useEffect(()=>{
 
-        if(filter === 0) return
+    // Buscar sectores y organizaciones
+    useEffect(()=>{
+        
+        if(parroquiaFilter === 0) return
         
         const fetchSectores = async ()=>{
             let result = await axios.get(`${apiURL}/api/vulnerabilidad/sectores`)
+            console.log("Sectores:")
             console.log(result.data)
             setListSectores(result.data)
         }
@@ -77,12 +101,27 @@ export const FormVulne = () => {
 
         const fetchOrganizaciones = async ()=>{
             let result = await axios.get(`${apiURL}/api/vulnerabilidad/organizaciones`)
+            console.log("Organizaciones:")
             console.log(result.data)
             setListOrganizaciones(result.data)
         }
         fetchOrganizaciones()
 
-    }, [filter])
+    }, [parroquiaFilter])
+
+    // Buscar Manzanas
+    useEffect(()=>{
+        if(sectorFilter === 0) return
+
+        const fetchManzanas = async ()=>{
+            let result = await axios.get(`${apiURL}/api/vulnerabilidad/manzanas`)
+            console.log("Manzanas:")
+            console.log(result.data)
+            setListManzanas(result.data)
+        }
+        fetchManzanas()
+        
+    },[sectorFilter])
 
     const handleParroquia = (e)=>{
         let [id, cod] = e.target.value.split(",")
@@ -90,19 +129,61 @@ export const FormVulne = () => {
         let arr = [ ...codCatastro]
         arr[2] = cod
 
+        setParroquia(e.target.value)
         setCodCatastro(arr)
-        setFilter(parseInt(id))
+        setParroquiaFilter(parseInt(id))
     }
 
     const handleSector = (e)=>{
 
         console.log(e.target.value)
         
-        let cod = e.target.value.split(",")[1]
+        let [id, cod] = e.target.value.split(",")
 
         let arr = [ ...codCatastro]
         arr[4] = cod
+        
+        setSector(e.target.value)
         setCodCatastro(arr)
+        setSectorFilter(parseInt(id))
+    }
+
+    const handleManzana = (e)=>{
+        console.log(e.target.value)
+        
+        let cod = e.target.value.split(",")[1]
+
+        let arr = [ ...codCatastro]
+        arr[5] = cod
+        
+        setManzana(e.target.value)
+        setCodCatastro(arr)
+    }
+
+    const handleCodCatastral = (e)=>{
+
+        let inputValue = e.target.value
+        let lastChar =  inputValue.at(-1)
+
+        // no borrar el formato previo
+        if(codCatastro.length === 6 && e.nativeEvent.data === null) return 
+        
+        // eliminar todo exepto el codigo anterior
+        if(codCatastro.length > 6 && e.nativeEvent.data === null)
+            setCodCatastro(inputValue.split("-"))
+
+        // Solo permitir numeros
+        if( isNaN( lastChar ) || lastChar == " " ) return 
+        
+        // Añadir "-" n cantidad de elementos
+        if(inputValue.length === 23 || inputValue.length === 27 || inputValue.length === 30)
+            inputValue = inputValue.substring( inputValue.length-1, -1) + "-" + lastChar
+
+        // no pasar de 32 caracteres
+        if(inputValue.length===33) return
+        
+        setCodCatastro(inputValue.split("-"))
+        
     }
 
     const handleChange = ()=>{}
@@ -142,10 +223,11 @@ export const FormVulne = () => {
                     <FormSectionSubTitle text={"Informacion del catastro"}/>
                     <FormRow>
                         <FormSelect inputName="" label="Parroquia" optionList={listParroquias} actionHandler={handleParroquia}/>
-                        <FormSelect inputName="" label="Sector" optionList={listSectores} parroquiaID={filter} actionHandler={handleSector}/>
+                        <FormSelect inputName="" label="Sector" optionList={listSectores} filter={parroquiaFilter} actionHandler={handleSector}/>
+                        <FormSelect inputName="" label="Manzana" optionList={listManzanas} filter={parroquiaFilter} actionHandler={handleManzana}/>
                     </FormRow>
                     <FormRow>
-                        <FormSelect inputName="" label="Organizacion" optionList={listOrganizaciones} parroquiaID={filter} />
+                        <FormSelect inputName="" label="Organizacion" optionList={listOrganizaciones} filter={parroquiaFilter}/>
                         {/* CODIGO CATASTRAL Debo ver si pongo esto en un componente */}
                         <div className="flex flex-col">
                             <label className="
@@ -164,9 +246,10 @@ export const FormVulne = () => {
                                 type="text" 
                                 name=""
                                 id="cod_catastro"
-                                readOnly 
+                                readOnly={ !(parroquia && sector && manzana) } // activar el input cuando se hayan seleccionando parroquia, sector y manzana
                                 required
                                 value={codCatastro.join("-")}
+                                onChange={handleCodCatastral}
                             />
                         </div>
                         {/* <FormGroup inputName="" label="Código Catastral" value={codCatastro.join("-")} isReadOnly={true} isRequired={true}/> */}
