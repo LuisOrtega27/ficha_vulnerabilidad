@@ -23,12 +23,12 @@ const tabList = [
         path: "#DGSO"
     },
     { 
-        name: "2. Vivienda y Censo", 
-        path: "#CVDP"
+        name: "2. Terreno y Parcela", 
+        path: "#SPAA"
     },
     { 
-        name: "3. Terreno y Parcela", 
-        path: "#SPAA"
+        name: "3. Vivienda y Censo", 
+        path: "#CVDP"
     },
     { 
         name: "4. Elementos Estructurales", 
@@ -37,7 +37,11 @@ const tabList = [
     { 
         name: "5. Patologías y Diagnóstico", 
         path: "#DEEE"
-    }
+    },
+    { 
+        name: "6. Equipamientos y Servicios", 
+        path: "#ESES"
+    },
 ]
 
 export const FormVulne = () => {
@@ -165,10 +169,10 @@ export const FormVulne = () => {
         let inputValue = e.target.value
         let lastChar =  inputValue.at(-1)
 
-        // no borrar el formato previo
+        // No borrar el formato previo
         if(codCatastro.length === 6 && e.nativeEvent.data === null) return 
         
-        // eliminar todo exepto el codigo anterior
+        // Eliminar todo exepto el codigo anterior
         if(codCatastro.length > 6 && e.nativeEvent.data === null)
             setCodCatastro(inputValue.split("-"))
 
@@ -186,7 +190,7 @@ export const FormVulne = () => {
         
     }
 
-    const handleChange = ()=>{}
+    const handleChange = ()=>{} // todabia no hecho
     
   return (
     <FormContainer>
@@ -204,10 +208,10 @@ export const FormVulne = () => {
                 <div className="meta-info">
                     <div>
                         <strong>Nº CONTROL:</strong> 
-                        <input name={""} className="text-siroh-alert-red font-bold w-16 text-center" value="90" readOnly/>
+                        <input name={"n_ficha"} className="text-siroh-alert-red font-bold w-16 text-center" readOnly/>
                     </div>
-                    <div><strong>Fecha:</strong> 16/4/2024</div>
-                    <div><strong>Fecha Levantamiento:</strong> 24/9/2023</div>
+                    <div> <strong>Fecha:</strong> <input type="date" name="fch_transcrip" readOnly/> </div>
+                    <div> <strong>Fecha Levantamiento:</strong> <input type="date" name="fch_levan" readOnly/> </div>
                 </div>
 
             </header>
@@ -222,9 +226,9 @@ export const FormVulne = () => {
                     
                     <FormSectionSubTitle text={"Informacion del catastro"}/>
                     <FormRow>
-                        <FormSelect inputName="" label="Parroquia" optionList={listParroquias} actionHandler={handleParroquia}/>
-                        <FormSelect inputName="" label="Sector" optionList={listSectores} filter={parroquiaFilter} actionHandler={handleSector}/>
-                        <FormSelect inputName="" label="Manzana" optionList={listManzanas} filter={parroquiaFilter} actionHandler={handleManzana}/>
+                        <FormSelect label="Parroquia" optionList={listParroquias} actionHandler={handleParroquia}/>
+                        <FormSelect label="Sector" optionList={listSectores} filter={parroquiaFilter} actionHandler={handleSector}/>
+                        <FormSelect label="Manzana" optionList={listManzanas} filter={parroquiaFilter} actionHandler={handleManzana}/>
                     </FormRow>
                     <FormRow>
                         <FormSelect inputName="" label="Organizacion" optionList={listOrganizaciones} filter={parroquiaFilter}/>
@@ -244,7 +248,7 @@ export const FormVulne = () => {
                                     bg-white
                                 " 
                                 type="text" 
-                                name=""
+                                name="cod_catastral"
                                 id="cod_catastro"
                                 readOnly={ !(parroquia && sector && manzana) } // activar el input cuando se hayan seleccionando parroquia, sector y manzana
                                 required
@@ -252,29 +256,60 @@ export const FormVulne = () => {
                                 onChange={handleCodCatastral}
                             />
                         </div>
-                        {/* <FormGroup inputName="" label="Código Catastral" value={codCatastro.join("-")} isReadOnly={true} isRequired={true}/> */}
                     </FormRow>
 
                     <FormSectionSubTitle text={"Informacion de la persona"}/>
                     <FormRow>
-                        <FormGroup inputName="" label={"Apellidos y Nombres del Ocupante"}/>
-                        <FormGroup inputName="" label={"Cédula de Identidad"}/>
+                        <FormGroup inputName="apellidos_nombres" label={"Apellidos y Nombres del Ocupante"}/>
+                        <FormGroup inputName="cedula" label={"Cédula de Identidad"}/>
                     </FormRow>
                     <FormRow>
-                        <FormGroup inputName="" label={"Teléfono Celular"}/>
-                        <FormGroup inputName="" label={"Teléfono Local"}/>
+                        <FormGroup inputName="tlf_celular" label={"Teléfono Celular"}/>
+                        <FormGroup inputName="tlf_local" label={"Teléfono Local"}/>
                     </FormRow>
 
                     <FormSectionSubTitle text={"Condicion"}/>
 
                     <FormCheckboxGrid>
+                        {/* Hay que cambiar la base de datos */}
                         <CheckboxItem inputType="radio" inputName="" label={"Propietario"}/>
                         <CheckboxItem inputType="radio" inputName="" label={"Inquilino / Ausente"}/>
                     </FormCheckboxGrid>
                     
                 </FormSection>
 
-                {/* 2 */}
+                {/* 2. */}
+                <FormSection sectionName={"form-section-SPAA"} id={"SPAA"}>
+                    <FormSectionTitle text={"2. Situación de la Parcela y Amenazas Ambientales"}/>
+
+                    <FormSectionSubTitle text={"Emplazamiento de la Parcela en el Terreno:"}/>
+                    <FormCheckboxGrid>
+                        <CheckboxItem inputName={""} label={"Al Borde del Talud"}/>
+                        <CheckboxItem inputName={""} label={"Sobre el Talud"}/>
+                        <CheckboxItem inputName={""} label={"Al Pie del Talud"}/>
+                    </FormCheckboxGrid>
+
+                    <FormSectionSubTitle text={"Factores de Riesgo e Inestabilidad del Entorno:"}/>
+                    <FormCheckboxGrid>
+                        <CheckboxItem inputName={""} label={"Deslizamientos o Derrumbes Recientes"}/>
+                        <CheckboxItem inputName={""} label={"Árboles y/o Postes Inclinados"}/>
+                        <CheckboxItem inputName={""} label={"Grietas y Hundimientos en Calles/Escaleras"}/>
+                        <CheckboxItem inputName={""} label={"Grietas y Hundimientos en el Terreno"}/>
+                        <CheckboxItem inputName={""} label={"Botes de Agua (Blanca y/o Servida)"}/>
+                        <CheckboxItem inputName={""} label={"Terreno Húmedo (Sobresaturado)"}/>
+                        <CheckboxItem inputName={""} label={"Socavación (Por Acción Humana)"}/>
+                        <CheckboxItem inputName={""} label={"Procesos Erosivos Activos"}/>
+                        <CheckboxItem inputName={""} label={"Cauces o Quebradas Adyacentes"}/>
+                        <CheckboxItem inputName={""} label={"Botaderos de Basura en las Cercanías"}/>
+                    </FormCheckboxGrid>
+
+                    <FormSectionSubTitle text={"Observaciones:"}/>
+                    <FormRow>
+                        <FormGroup inputType={"textarea"} inputName={""} />
+                    </FormRow>
+                </FormSection>
+
+                {/* 3. */}
                 <FormSection sectionName={"form-section-CVDP"} id={"CVDP"}>
 
                     <FormSectionTitle text={"2. Características de la Vivienda y Datos Poblacionales"}/>
@@ -298,33 +333,15 @@ export const FormVulne = () => {
                             <FormGroup inputType="number" inputName={""} label={"Adultos"}/>
                             <FormGroup inputType="number" inputName={""} label={"Adultos Mayores"}/>
                             <FormGroup inputType="number" inputName={""} label={"Discapacitados"}/>
+                            <FormGroup inputType="number" inputName={""} label={"N° de personas"}/>
                     </FormRow>
-                </FormSection>
 
-                {/* 3. */}
-                <FormSection sectionName={"form-section-SPAA"} id={"SPAA"}>
-                    <FormSectionTitle text={"3. Situación de la Parcela y Amenazas Ambientales"}/>
-
-                    <FormSectionSubTitle text={"Emplazamiento de la Parcela en el Terreno:"}/>
-                    <FormCheckboxGrid>
-                        <CheckboxItem inputName={""} label={"Al Borde del Talud"}/>
-                        <CheckboxItem inputName={""} label={"Sobre el Talud"}/>
-                        <CheckboxItem inputName={""} label={"Al Pie del Talud"}/>
-                    </FormCheckboxGrid>
-
-                    <FormSectionSubTitle text={"Factores de Riesgo e Inestabilidad del Entorno:"}/>
-                    <FormCheckboxGrid>
-                        <CheckboxItem inputName={""} label={"Deslizamientos o Derrumbes Recientes"}/>
-                        <CheckboxItem inputName={""} label={"Árboles y/o Postes Inclinados"}/>
-                        <CheckboxItem inputName={""} label={"Grietas y Hundimientos en Calles/Escaleras"}/>
-                        <CheckboxItem inputName={""} label={"Grietas y Hundimientos en el Terreno"}/>
-                        <CheckboxItem inputName={""} label={"Botes de Agua (Blanca y/o Servida)"}/>
-                        <CheckboxItem inputName={""} label={"Terreno Húmedo (Sobresaturado)"}/>
-                        <CheckboxItem inputName={""} label={"Socavación (Por Acción Humana)"}/>
-                        <CheckboxItem inputName={""} label={"Procesos Erosivos Activos"}/>
-                        <CheckboxItem inputName={""} label={"Cauces o Quebradas Adyacentes"}/>
-                        <CheckboxItem inputName={""} label={"Botaderos de Basura en las Cercanías"}/>
-                    </FormCheckboxGrid>
+                    <FormSectionSubTitle text={"Observaciones"}/>
+                    <FormRow>
+                        <FormGroup inputType="textarea" inputName={""} />
+                    </FormRow>
+                    
+                    
                 </FormSection>
 
                 {/* 4. */}
@@ -333,46 +350,56 @@ export const FormVulne = () => {
 
                     <FormSectionSubTitle text={"Paredes"}/>
                     <FormCheckboxGrid>
-                        <CheckboxItem inputName={""} label={"Bloques Cemento / Arcilla"}/>
-                        <CheckboxItem inputName={""} label={"Bahareque / Adobe"}/>
+                        <CheckboxItem inputName={""} label={"Zinc"}/>
                         <CheckboxItem inputName={""} label={"Madera"}/>
-                        <CheckboxItem inputName={""} label={" Cartón / Otros"}/>
+                        <CheckboxItem inputName={""} label={"Bahareque / Adobe"}/>
+                        <CheckboxItem inputName={""} label={"Cartón"}/>
+                        <CheckboxItem inputName={""} label={"Bloques Cemento / Arcilla"}/>
+                        <FormGroup inputName={""} label={"Otros (especificar)"}/>
                     </FormCheckboxGrid>
                     
                     <FormSectionSubTitle text={"Techo / Entre Piso"}/>
                     <FormCheckboxGrid>
+                        <CheckboxItem inputName={""} label={"Paja / Bambú"}/>
                         <CheckboxItem inputName={""} label={"Zinc y/o Acerolit"}/>
                         <CheckboxItem inputName={""} label={"Tabelones"}/>
                         <CheckboxItem inputName={""} label={"Losa Acero"}/>
                         <CheckboxItem inputName={""} label={"Madera"}/>
-                        <CheckboxItem inputName={""} label={"Paja / Bambú"}/>
+                        <FormGroup inputName={""} label={"Otros (especificar)"}/>
                     </FormCheckboxGrid>
+
                     
-                    <FormSectionSubTitle text={'">Columnas'}/>
+                    <FormSectionSubTitle text={"Columnas"}/>
                     <FormCheckboxGrid>
-                        <CheckboxItem inputName={""} label={"Concreto Armado"}/>
                         <CheckboxItem inputName={""} label={"Acero"}/>
+                        <CheckboxItem inputName={""} label={"Concreto Armado"}/>
                         <CheckboxItem inputName={""} label={"Madera"}/>
                         <CheckboxItem inputName={""} label={"Prefabricado"}/>
                         <CheckboxItem inputName={""} label={"Ninguno"}/>
+                        <FormGroup inputName={""} label={"Otros (especificar)"}/>
                     </FormCheckboxGrid>
                     
                     <FormSectionSubTitle text={"Vigas"}/>
                     <FormCheckboxGrid>
-                        <CheckboxItem inputName={""} label={"Concreto Armado"}/>
                         <CheckboxItem inputName={""} label={"Acero"}/>
+                        <CheckboxItem inputName={""} label={"Concreto Armado"}/>
                         <CheckboxItem inputName={""} label={"Madera"}/>
                         <CheckboxItem inputName={""} label={"Prefabricado"}/>
                         <CheckboxItem inputName={""} label={"Ninguno"}/>
+                        <FormGroup inputName={""} label={"Otros (especificar)"}/>
                     </FormCheckboxGrid>
                     
-                    <FormSectionSubTitle text={"Pisos / Acabados"}/>
+                    <FormSectionSubTitle text={"Observaciones:"}/>
+                    <FormRow>
+                        <FormGroup inputType={"textarea"} inputName={""} />
+                    </FormRow>
+                    {/* <FormSectionSubTitle text={"Pisos / Acabados"}/>
                     <FormRow>
                         <FormGroup inputName={""} label={"Especificar tipología o estado físico de los pisos..."} />
-                    </FormRow>
+                    </FormRow> */}
                     
                 </FormSection>
-
+                
                 {/* 5. */}
                 <FormSection sectionName={"form-section-DEEE"} id={"DEEE"}>
                     <FormSectionTitle text="5. Daños Estructurales, Equipamiento y Evaluación Final"/>
@@ -395,9 +422,27 @@ export const FormVulne = () => {
                         <CheckboxItem inputName={"provicional14"} label={"Columnas con Daños / Agrietamientos"}/>
                         <CheckboxItem inputName={"provicional15"} label={"Efecto de Columna Corta"}/>
                     </FormCheckboxGrid>
+                    
+                </FormSection>
+
+                {/* 6 */}
+                <FormSection sectionName={"form-section-ESES"} id={"ESES"}>
+                    <FormSectionTitle text={"6. Equipamientos y Servicios"} />
+
+                    <FormSectionSubTitle text={"Tanque de almacenamiento"} />
+                    <FormCheckboxGrid>
+                        <CheckboxItem inputType="radio" inputName={""} label={"Subterraneo"} />
+                        <CheckboxItem inputType="radio" inputName={""} label={"Elevado"} />
+                        <CheckboxItem inputType="radio" inputName={""} label={"Pozo septico"} />
+                    </FormCheckboxGrid>
+
+                    <FormSectionSubTitle text={"Observaciones"} />
+                    <FormRow>
+                        <FormGroup inputType={"textarea"} inputName={""} />
+                    </FormRow>
 
                     <FormActions/> {/* Submit BTN */} 
-                    
+
                 </FormSection>
 
             </FormBody>

@@ -6,6 +6,9 @@
     color-vul-secondary: #2b6cb0;
     color-vul-accent: #3182ce; 
 }
+html{
+    scroll-padding-top: 100px;
+}
 
 @theme {
     /* COLORS */
@@ -53,9 +56,6 @@
     --color-checkboxItem: #334155;
 }
 
-@layer components {
-
-}
 
 /* HEADER */
 .form-container {
